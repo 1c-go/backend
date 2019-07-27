@@ -1,5 +1,3 @@
-from reversion.admin import VersionAdmin
-
 from main.admin import admin_site
 from .models.patient import Patient
 from .models.specialization import Specialization

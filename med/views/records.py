@@ -4,8 +4,8 @@ from rest_framework.permissions import SAFE_METHODS
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from med.models import Record
-from med.serializers.record import RecordCreateSerializer, RecordSerializer
+from ..models import Record
+from ..serializers.record import RecordCreateSerializer, RecordSerializer
 
 __all__ = ['RecordsViewSet']
 
@@ -25,6 +25,9 @@ class RecordsViewSet(GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModel
         if self.request.method in SAFE_METHODS:
             return RecordSerializer
         return RecordCreateSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(patient=self.request.user.patient_set.first())
 
     @decorators.action(methods=('POST',), detail=True)
     def rate(self, request, *args, **kwargs):

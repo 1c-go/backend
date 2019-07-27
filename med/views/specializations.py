@@ -2,8 +2,8 @@ from django_filters import FilterSet, filters
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from med.serializers.specialization import SpecializationSerializer
 from ..models import Specialization
+from ..serializers.specialization import SpecializationSerializer
 
 __all__ = ['SpecializationsViewSet']
 

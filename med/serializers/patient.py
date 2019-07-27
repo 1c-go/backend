@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models.patient import Patient
+from ..models import Patient
 
 
 class PatientSerializer(serializers.ModelSerializer):

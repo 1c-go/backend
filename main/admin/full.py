@@ -1,6 +1,5 @@
 from django.contrib.auth.models import Permission
 
-# from jet.dashboard.models import UserDashboardModule
 from reversion.models import Revision, Version
 
 from .custom import *
@@ -18,8 +17,6 @@ full_admin_site = FullAdminSite(name='full')
 full_admin_site.register(CustomUser, VersionedUserAdmin)
 full_admin_site.register(Group, GroupAdmin)
 full_admin_site.register(Permission)
-# full_admin_site.register(Session)
 
-# full_admin_site.register(UserDashboardModule)
 full_admin_site.register(Revision)
 full_admin_site.register(Version)

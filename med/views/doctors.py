@@ -2,8 +2,8 @@ from django_filters import FilterSet, filters
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from med.serializers.doctor import DoctorSerializer
 from ..models import Doctor
+from ..serializers.doctor import DoctorSerializer
 
 __all__ = ['DoctorsViewSet']
 

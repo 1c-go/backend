@@ -11,7 +11,7 @@ class Position(models.Model):
         verbose_name='Подразделение', to='med.Division', on_delete=models.PROTECT,
     )
     specializations = models.ForeignKey(
-        verbose_name='Специализации', to='med.Specialization', on_delete=models.PROTECT,
+        verbose_name='Специализация', to='med.Specialization', on_delete=models.PROTECT,
     )
 
     class Meta:

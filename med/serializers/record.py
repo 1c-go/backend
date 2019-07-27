@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models.record import Record
+from ..models import Record
 
 
 class RecordSerializer(serializers.ModelSerializer):
@@ -37,4 +37,4 @@ class RecordSerializer(serializers.ModelSerializer):
 class RecordCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Record
-        fields = ('doctor', 'recording_at', 'title', 'description')
+        fields = ('doctor', 'recording_at', 'specialization', 'title', 'hospital', 'description')

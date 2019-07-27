@@ -17,10 +17,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, re_path, include
-
-from rest_framework import routers
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView
 )
@@ -29,17 +26,12 @@ from main.admin import admin_site, full_admin_site
 from main.views.user import CustomTokenObtainView, RegistrationView
 from med.urls import router
 
-
 urlpatterns = [
     path('', admin_site.urls),
     path('admin/', full_admin_site.urls),
-    # re_path(r'^baton/', include('baton.urls')),
-    # re_path(r'^jet/', include('jet.urls', 'jet')),
-    # re_path(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
 
     re_path(r'^api/', include(router.urls)),
     re_path(r'^api/registration/', RegistrationView.as_view(), name='registration'),
-
     re_path(r'^api/token/$', CustomTokenObtainView.as_view(), name='token_obtain_pair'),
     re_path(r'^api/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
     re_path(r'^api/token/verify/$', TokenVerifyView.as_view(), name='token_verify'),

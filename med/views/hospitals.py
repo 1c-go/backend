@@ -1,8 +1,8 @@
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from ..serializers.hospital import HospitalSerializer
 from ..models import Hospital
+from ..serializers.hospital import HospitalSerializer
 
 __all__ = ['HospitalsViewSet']
 

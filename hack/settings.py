@@ -26,14 +26,10 @@ SECRET_KEY = 'e@8eoyx0g=o%^wnj5#kk68$$yt)5%q6(o06o0m0zl6u^sp2toh'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.155.62.249', '192.168.43.142', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['10.155.62.249', '192.168.43.142', '127.0.0.1', 'localhost', 'jlemyp.ru']
 
 
 INSTALLED_APPS = [
-    # 'jet.dashboard',
-    # 'jet',
-    # 'baton',
-    # 'suit',
     'main.apps.SuitConfig',
 
     'django.contrib.admin',
@@ -49,7 +45,6 @@ INSTALLED_APPS = [
 
     'main.apps.MainConfig',
     'med.apps.MedConfig',
-    # 'baton.autodiscover',
 ]
 
 MIDDLEWARE = [
@@ -98,14 +93,17 @@ DATABASES = {
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    # {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    # {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    # {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    # {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 AUTH_USER_MODEL = 'main.CustomUser'
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'main.auth_backend.CustomAuthBackend',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -148,7 +146,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_RENDERER_CLASSES': [
         'main.renderers.JsonUnicodeRenderer',
-        #'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     ],
     'PAGE_SIZE': 10,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -182,71 +180,3 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
-
-# -------- jet --------
-
-JET_THEMES = [
-    {
-        'theme': 'default',  # theme folder name
-        'color': '#47bac1',  # color of the theme's button in user menu
-        'title': 'Default'  # theme title
-    },
-    {
-        'theme': 'green',
-        'color': '#44b78b',
-        'title': 'Green'
-    },
-    {
-        'theme': 'light-green',
-        'color': '#2faa60',
-        'title': 'Light Green'
-    },
-    {
-        'theme': 'light-violet',
-        'color': '#a464c4',
-        'title': 'Light Violet'
-    },
-    {
-        'theme': 'light-blue',
-        'color': '#5EADDE',
-        'title': 'Light Blue'
-    },
-    {
-        'theme': 'light-gray',
-        'color': '#222',
-        'title': 'Light Gray'
-    }
-]
-
-JET_SIDE_MENU_COMPACT = True
-
-'''
-JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
-    {'label': _('General'), 'app_label': 'core', 'items': [
-        {'name': 'help.question'},
-        {'name': 'pages.page', 'label': _('Static page')},
-        {'name': 'city'},
-        {'name': 'validationcode'},
-        {'label': _('Analytics'), 'url': 'http://example.com', 'url_blank': True},
-    ]},
-    {'label': _('Users'), 'items': [
-        {'name': 'core.user'},
-        {'name': 'auth.group'},
-        {'name': 'core.userprofile', 'permissions': ['core.user']},
-    ]},
-    {'app_label': 'banners', 'items': [
-        {'name': 'banner'},
-        {'name': 'bannertype'},
-    ]},
-]
-'''
-'''
-name - model name (can be either MODEL_NAME or APP_LABEL.MODEL_NAME)
-label - item text label
-url - custom url (format is described below)
-url_blank - open url in new table (boolean)
-permissions - list of required permissions to display item
-'''
-
-JET_INDEX_DASHBOARD = 'main.dashboard.DefaultIndexDashboard'
-JET_APP_INDEX_DASHBOARD = 'main.dashboard.DefaultAppIndexDashboard'

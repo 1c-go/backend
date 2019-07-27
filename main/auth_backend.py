@@ -6,14 +6,10 @@ __all__ = ['CustomAuthBackend']
 
 
 class CustomAuthBackend(ModelBackend):
-    def authenticate(self, request, username=None, password=None, **kwargs):
-        if username is None:
-            username = kwargs.get(CustomUser.USERNAME_FIELD)
+    def authenticate(self, request, email=None, password=None, **kwargs):
         try:
-            user = CustomUser._default_manager.get_by_natural_key(username)
+            user = CustomUser.objects.get(email=email)
         except CustomUser.DoesNotExist:
-            # Run the default password hasher once to reduce the timing
-            # difference between an existing and a nonexistent user (#20760).
             CustomUser().set_password(password)
         else:
             if user.check_password(password) and self.user_can_authenticate(user):
