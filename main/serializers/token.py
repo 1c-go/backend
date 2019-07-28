@@ -15,18 +15,9 @@ class CustomTokenObtainSerializer(TokenObtainPairSerializer):
 
     def validate(self, attrs):
         authenticate_kwargs = {
+            self.username_field: attrs[self.username_field],
             'password': attrs['password'],
         }
-
-        if 'email' in attrs:
-            authenticate_kwargs['email'] = attrs['email']
-        elif self.username_field in attrs:
-            authenticate_kwargs[self.username_field] = attrs[self.username_field]
-        else:
-            raise exceptions.AuthenticationFailed(
-                self.error_messages['no_active_account'],
-                'no_active_account',
-            )
 
         try:
             authenticate_kwargs['request'] = self.context['request']

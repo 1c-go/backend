@@ -6,9 +6,9 @@ __all__ = ['CustomAuthBackend']
 
 
 class CustomAuthBackend(ModelBackend):
-    def authenticate(self, request, email=None, password=None, **kwargs):
+    def authenticate(self, request, username=None, password=None, **kwargs):
         try:
-            user = CustomUser.objects.get(email=email)
+            user = CustomUser.objects.get(email=username)
         except CustomUser.DoesNotExist:
             CustomUser().set_password(password)
         else:
