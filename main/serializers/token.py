@@ -1,21 +1,33 @@
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth import authenticate
+from rest_framework import serializers, exceptions
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, PasswordField
 
 __all__ = ['CustomTokenObtainSerializer']
 
 
 class CustomTokenObtainSerializer(TokenObtainPairSerializer):
-    '''
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields[self.username_field] = serializers.CharField()
+        self.fields[self.username_field] = serializers.CharField(required=False)
+        self.fields['email'] = serializers.CharField(required=False)
         self.fields['password'] = PasswordField()
 
     def validate(self, attrs):
         authenticate_kwargs = {
-            self.username_field: attrs[self.username_field],
             'password': attrs['password'],
         }
+
+        if 'email' in attrs:
+            authenticate_kwargs['email'] = attrs['email']
+        elif self.username_field in attrs:
+            authenticate_kwargs[self.username_field] = attrs[self.username_field]
+        else:
+            raise exceptions.AuthenticationFailed(
+                self.error_messages['no_active_account'],
+                'no_active_account',
+            )
+
         try:
             authenticate_kwargs['request'] = self.context['request']
         except KeyError:
@@ -29,9 +41,12 @@ class CustomTokenObtainSerializer(TokenObtainPairSerializer):
                 'no_active_account',
             )
 
-        return {}
-    '''
-    def validate(self, attrs):
-        data = super().validate(attrs)
-        data["full_name"] = self.user.full_name
+        refresh = self.get_token(self.user)
+
+        data = {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+            'full_name': self.user.full_name
+        }
+
         return data

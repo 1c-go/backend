@@ -1,4 +1,3 @@
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 __all__ = ['Record']
@@ -42,10 +41,6 @@ class Record(models.Model):
     )
     description = models.TextField(
         verbose_name='Описание',
-    )
-    rate = models.PositiveSmallIntegerField(
-        verbose_name='Оценка', null=True, blank=True, validators=(MinValueValidator(1),
-                                                                  MaxValueValidator(10)),
     )
     status = models.PositiveSmallIntegerField(
         verbose_name='Статус', default=OPENED, choices=_status_choices,

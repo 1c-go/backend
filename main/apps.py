@@ -34,7 +34,7 @@ class SuitConfig(DjangoSuitConfig):
     )
     '''
 
-    #'''
+    '''
     menu = (
         ParentItem(app='med'),
         ParentItem('Пользователи', children=[
@@ -43,9 +43,9 @@ class SuitConfig(DjangoSuitConfig):
             ChildItem('Open Google', url='http://google.com', target_blank=True),
         ]),
     )
-    #'''
+    '''
 
-    def menu_handler2(self, items, request, context):
+    def menu_handler(self, items, request, context):
         main_group = None
         user_group = None
         for item in items:
