@@ -8,4 +8,4 @@ __all__ = ['QuestionSerializer']
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ('text',)
+        fields = ('id', 'question')

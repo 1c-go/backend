@@ -135,7 +135,7 @@ MEDIA_URL = '/_storage/'
 # -------- rest --------
 
 REST_FRAMEWORK = {
-    "NON_FIELD_ERRORS_KEY": "non_field_errors",
+    'NON_FIELD_ERRORS_KEY': 'non_field_errors',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',

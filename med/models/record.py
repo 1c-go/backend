@@ -49,3 +49,6 @@ class Record(models.Model):
     class Meta:
         verbose_name = 'Запись'
         verbose_name_plural = 'Записи'
+
+    def __str__(self):
+        return f'{self.patient} - {self.recording_at.strftime("%Y.%m.%d %H:%M")}'

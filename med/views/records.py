@@ -49,7 +49,7 @@ class RecordsViewSet(GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModel
     def questions(self, request, *args, **kwargs):
         record = self.get_object()
         if record.status != record.AWAITING_RATE:
-            raise ValidationError('Можно ')
+            raise ValidationError('Можно оценить только заявку, ожидающую ее')
         answers = record.answer_set.all()
         if not answers:
             questions_spec = Question.random_manager.for_specialization(record.specialization)
@@ -58,13 +58,13 @@ class RecordsViewSet(GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModel
             questions = questions_spec | questions_div | questions_hospital
 
             Answer.objects.bulk_create([
-                Answer.objects.create(record=record, question=question)
+                Answer(record=record, question=question)
                 for question in questions
             ])
         else:
             questions = Question.objects.filter(answer__record=record)
 
-        return QuestionSerializer(questions, many=True).data
+        return Response(QuestionSerializer(questions, many=True).data)
 
     @decorators.action(methods=('POST',), detail=True)
     def answer(self, request, *args, **kwargs):
@@ -73,7 +73,7 @@ class RecordsViewSet(GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModel
         if record.status != Record.AWAITING_RATE:
             raise ValidationError('Можно оценить только заявку, ожидающую оценку')
 
-        serializer = AnswersParser(data=request.data)
+        serializer = AnswerParser(data=request.data, many=True)
         serializer.is_valid(raise_exception=True)
 
         for pair in serializer.validated_data:

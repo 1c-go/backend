@@ -16,7 +16,7 @@ class Answer(models.Model):
 
     class Meta:
         verbose_name = 'Ответ на вопрос'
-        verbose_name_plural = 'Ответ на вопрос'
+        verbose_name_plural = 'Ответы на вопросы'
 
     def __str__(self):
         return f'{self.record} - {self.question}'

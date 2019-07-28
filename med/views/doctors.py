@@ -1,8 +1,10 @@
+from django.db.models import Count, F, Q, FloatField
+from django.db.models.functions import Cast
 from django_filters import FilterSet, filters
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from ..models import Doctor
+from ..models import Doctor, calc_rate
 from ..serializers.doctor import DoctorSerializer
 
 __all__ = ['DoctorsViewSet']
@@ -14,6 +16,6 @@ class DoctorFilterSet(FilterSet):
 
 
 class DoctorsViewSet(GenericViewSet, mixins.ListModelMixin):
-    queryset = Doctor.objects.all()
+    queryset = calc_rate(Doctor.objects)
     serializer_class = DoctorSerializer
     filterset_class = DoctorFilterSet

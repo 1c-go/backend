@@ -9,10 +9,10 @@ __all__ = ['SpecializationsViewSet']
 
 
 class SpecializationFilterSet(FilterSet):
-    hospital = filters.NumberFilter(field_name='position__division__hospital')
+    hospital = filters.NumberFilter(field_name='position__division__hospital', distinct=True)
 
 
 class SpecializationsViewSet(GenericViewSet, mixins.ListModelMixin):
-    queryset = Specialization.objects.all()
+    queryset = Specialization.objects.order_by('name')
     serializer_class = SpecializationSerializer
     filterset_class = SpecializationFilterSet

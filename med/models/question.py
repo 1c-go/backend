@@ -6,7 +6,7 @@ __all__ = ['Question']
 # по специализации, по больнице, по подразделению
 # специалист: specialization, hospital=False
 # подразделение: specialization=null, hospital=False
-# больница: specialization=null, hospital=False
+# больница: specialization=null, hospital=True
 
 
 class QuestionManager(models.Manager):
@@ -24,7 +24,7 @@ class QuestionManager(models.Manager):
         return self._random(qs, count)
 
     def for_hospital(self, count=DEFAULT_COUNT):
-        qs = super().get_queryset().filter(specialization__isnull=False, hospital=True)
+        qs = super().get_queryset().filter(specialization=None, hospital=True)
         return self._random(qs, count)
 
 
@@ -34,6 +34,7 @@ class Question(models.Model):
     )
     specialization = models.ForeignKey(
         verbose_name='Специализация', to='med.Specialization', on_delete=models.PROTECT,
+        null=True, blank=True,
     )
     hospital = models.BooleanField(
         verbose_name='Вопрос о больнице'

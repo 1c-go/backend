@@ -10,7 +10,7 @@ class Position(models.Model):
     division = models.ForeignKey(
         verbose_name='Подразделение', to='med.Division', on_delete=models.PROTECT,
     )
-    specializations = models.ForeignKey(
+    specialization = models.ForeignKey(
         verbose_name='Специализация', to='med.Specialization', on_delete=models.PROTECT,
     )
 
@@ -19,4 +19,4 @@ class Position(models.Model):
         verbose_name_plural = 'Рабочие места'
 
     def __str__(self):
-        return f"{self.doctor} - {self.division} - {self.specializations}"
+        return f'{self.doctor} - {self.division} - {self.specialization}'
